@@ -17,13 +17,10 @@ zinput = float(input("Z: "))
 # inverse kinematics
 def getangles(x, y, z):
     global l1, l2, l3
-    zp = z-l1
-    th1 = np.arctan2(y,x)
-    th3p = -np.arccos((x**2+y**2+z**2-l2**2*l3**2) / (2*l2*l3))
-    r = np.sqrt(x**2+y**2+z**2)
-    th2 = np.arcsin(zp/r) + np.arctan2(l3*np.sin(th3p), l2 + l3*np.cos(th3p))
-    th3 = (th2 + np.pi / 2) + th3p
-
+    rp = np.sqrt(x**2 + y**2 + (z - l1)**2)
+    th1 = np.arctan2(y, x)
+    th3 = np.pi - np.arccos((rp**2 - l3**2 - l1**2) / (-2*l3*l2))
+    th2 = np.arctan2(z - l1, np.sqrt(x**2 + y**2)) + np.arcsin((l3 * np.sin(np.pi - th3)) / np.sqrt(x**2 + y**2 + (z - l1)**2))
     return [th1, th2, th3]
 
 # forward kinematics
