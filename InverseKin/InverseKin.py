@@ -1,18 +1,19 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-# l1 and l2 must be 1, doesnt work otherwise
+# l1 must be 1, doesnt work otherwise
 l1 = 1
 l2 = 1
-l3 = 1
+l3 = 2
 
 # inverse kinematics
 def getangles(x, y, z):
     global l1, l2, l3
 
     rp = np.sqrt(x**2 + y**2 + (z - l1)**2)
+
     th1 = np.arctan2(y, x)
-    B = np.arccos((rp**2 - l3**2 - l1**2) / (-2*l3*l2))
+    B = np.arccos((rp**2 - l3**2 - l2**2) / (-2*l3*l2))
     #B = np.arctan2(np.sqrt(1-((rp**2 - l3**2 - l1**2) / (-2*l3*l2))**2), (rp**2 - l3**2 - l1**2) / (-2*l3*l2))
     th3 = np.pi - B
     #th3 = B
@@ -41,7 +42,7 @@ def rad_degrees(angles):
     return [angles[0] * 180 / np.pi, angles[1] * 180 / np.pi, angles[2] * 180 / np.pi]
 
 resolution = 20
-scale = 0.5
+scale = 1
 plt.grid(linestyle="--")
 for i in range(resolution + 1):
     for j in range(resolution + 1):
